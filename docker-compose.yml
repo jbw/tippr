@@ -1,0 +1,43 @@
+version: "3"
+services:
+  tippr-api:
+    image: tippr-api
+    build:
+      context: .
+      dockerfile: src/tippr.api/Dockerfile
+    environment:
+      DB_HOST: "postgres"
+      DB_NAME: "tippr"
+      DB_USERNAME: "tippr"
+      DB_PASSWORD: "tippr"
+      DB_PORT: 5432
+    command: npm run start:dev
+    ports:
+      - 3000:3000
+    depends_on:
+      - postgres
+    volumes:
+      - .:/src/
+      - /node_modules
+
+  # tippr-worker:
+  #   image: tippr-worker
+  #   build:
+  #     context: .
+  #     dockerfile: src/tippr.worker/Dockerfile
+  #   depends_on:
+  #     - redis
+
+  redis:
+    image: redis:alpine
+    ports:
+      - 6379:6379
+
+  postgres:
+    image: postgres:alpine
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: "tippr"
+      POSTGRES_PASSWORD: "tippr"
+      POSTGRES_MULTIPLE_DATABASES: "tippr"
