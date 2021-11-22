@@ -13,6 +13,8 @@ export class TipsController {
   constructor(private commandBus: CommandBus, private queryBus: QueryBus) { }
 
   @Post()
+  @HttpCode(HttpStatus.OK)
+  @Authorize(Permission.TIPS_WRITE)
   async create(): Promise<Tip> {
     const tip = await this.commandBus.execute(new CreateTipCommand(1.0, "test"));
     return tip;
@@ -20,7 +22,7 @@ export class TipsController {
 
   @Get()
   @HttpCode(HttpStatus.OK)
-  @Authorize(Permission.BURGER)
+  @Authorize(Permission.TIPS_READ)
   async list(): Promise<Tip[]> {
     const tips = await this.queryBus.execute(new ListTipsQuery());
     return tips;
