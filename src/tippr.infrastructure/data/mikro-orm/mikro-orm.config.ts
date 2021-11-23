@@ -1,5 +1,6 @@
 import { Options } from "@mikro-orm/core";
 import { Logger } from "@nestjs/common";
+
 import { Tip } from "../../entities/tip.entity";
 import { DatabaseConfigService } from "../database.config.service";
 

@@ -1,6 +1,7 @@
-import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
-import { Reflector } from '@nestjs/core';
-import { Permission } from '../../../tippr.domain/permissions/permissions.enum';
+import { CanActivate, ExecutionContext, Injectable } from "@nestjs/common";
+import { Reflector } from "@nestjs/core";
+
+import { Permission } from "../../../tippr.domain/permissions/permissions.enum";
 
 const PERMISSIONS_KEY = "permissions";
 @Injectable()

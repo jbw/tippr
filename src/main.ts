@@ -1,10 +1,10 @@
-import { NestFactory } from '@nestjs/core';
-import { ValidationPipe, Logger, INestApplication } from '@nestjs/common';
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import * as helmet from "helmet";
 
-import * as helmet from 'helmet';
+import { INestApplication, Logger, ValidationPipe } from "@nestjs/common";
+import { NestFactory } from "@nestjs/core";
+import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 
-import { AppModule } from './app.module';
+import { AppModule } from "./app.module";
 
 async function SetupSwagger(app: INestApplication) {
 

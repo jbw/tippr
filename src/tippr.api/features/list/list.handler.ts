@@ -1,6 +1,8 @@
-import { EntityRepository, MikroORM } from "@mikro-orm/core";
 import { Tip } from "src/tippr.infrastructure/entities/tip.entity";
-import { QueryHandler, IQueryHandler } from "@nestjs/cqrs";
+
+import { EntityRepository, MikroORM } from "@mikro-orm/core";
+import { IQueryHandler, QueryHandler } from "@nestjs/cqrs";
+
 import { ListTipsQuery } from "./list.query";
 
 @QueryHandler(ListTipsQuery)

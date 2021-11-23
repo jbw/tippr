@@ -1,8 +1,9 @@
-import { EntityRepository, MikroORM } from "@mikro-orm/core";
-import { EntityManager } from "@mikro-orm/postgresql";
 import { Tip } from "src/tippr.infrastructure/entities/tip.entity";
-import { CreateTipCommand } from "./create.command";
+
+import { EntityRepository, MikroORM } from "@mikro-orm/core";
 import { CommandHandler, ICommandHandler } from "@nestjs/cqrs";
+
+import { CreateTipCommand } from "./create.command";
 
 @CommandHandler(CreateTipCommand)
 export class CreateTipHandler implements ICommandHandler<CreateTipCommand> {

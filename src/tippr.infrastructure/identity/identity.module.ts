@@ -1,6 +1,7 @@
-import { Module } from '@nestjs/common';
-import { IdentityConfigService } from './identity.config';
-import { JwtStrategy } from './jwt/jwt.strategy';
+import { Module } from "@nestjs/common";
+
+import { IdentityConfigService } from "./identity.config";
+import { JwtStrategy } from "./jwt/jwt.strategy";
 
 @Module({
   providers: [JwtStrategy, IdentityConfigService],
