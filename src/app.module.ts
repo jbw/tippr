@@ -9,6 +9,8 @@ import { DatabaseConfigModule } from "./tippr.infrastructure/data/database.modul
 import { MikroModule } from "./tippr.infrastructure/data/mikro-orm/mikro-orm.module";
 import { IdentityConfigModule } from "./tippr.infrastructure/identity/identity.module";
 import { LoggerModule } from "./tippr.infrastructure/logger/logger.module";
+import { TipRepository } from "./tippr.infrastructure/repositories/tip.repository";
+import { TipRepositoryModule } from "./tippr.infrastructure/repositories/tips.repository.module";
 
 export const Handlers = [CreateTipHandler, ListTipQueryHandler];
 
@@ -19,10 +21,10 @@ export const Handlers = [CreateTipHandler, ListTipQueryHandler];
     ConfigModule,
     DatabaseConfigModule,
     MikroModule,
-    IdentityConfigModule
+    IdentityConfigModule,TipRepositoryModule
   ],
   controllers: [TipsController],
-  providers: [
+  providers: [TipRepository,
     ...Handlers
   ],
 })

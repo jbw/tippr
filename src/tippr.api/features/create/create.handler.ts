@@ -1,6 +1,6 @@
 import { Tip } from "src/tippr.infrastructure/entities/tip.entity";
+import { TipRepository } from "src/tippr.infrastructure/repositories/tip.repository";
 
-import { EntityRepository, MikroORM } from "@mikro-orm/core";
 import { CommandHandler, ICommandHandler } from "@nestjs/cqrs";
 
 import { CreateTipCommand } from "./create.command";
@@ -8,11 +8,9 @@ import { CreateTipCommand } from "./create.command";
 @CommandHandler(CreateTipCommand)
 export class CreateTipHandler implements ICommandHandler<CreateTipCommand> {
 
-    private readonly repository: EntityRepository<Tip>;
 
-    constructor(private readonly orm: MikroORM) {
-        this.repository = this.orm.em.getRepository(Tip);
-    }
+    constructor(private readonly tipRepository: TipRepository) {}
+
 
     async execute(command: CreateTipCommand) {
 
@@ -20,7 +18,7 @@ export class CreateTipHandler implements ICommandHandler<CreateTipCommand> {
         tip.amount = command.amount;
         tip.message = command.message;
 
-        await this.repository.persistAndFlush(tip);
+        await this.tipRepository.addAndSave(tip);
 
         return tip;
     }

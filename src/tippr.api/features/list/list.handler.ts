@@ -1,20 +1,14 @@
-import { Tip } from "src/tippr.infrastructure/entities/tip.entity";
+import { TipRepository } from "src/tippr.infrastructure/repositories/tip.repository";
 
-import { EntityRepository, MikroORM } from "@mikro-orm/core";
 import { IQueryHandler, QueryHandler } from "@nestjs/cqrs";
 
 import { ListTipsQuery } from "./list.query";
 
 @QueryHandler(ListTipsQuery)
 export class ListTipQueryHandler implements IQueryHandler<ListTipsQuery> {
+  constructor(private readonly tipRepository: TipRepository) {}
 
-    private readonly repository: EntityRepository<Tip>;
-
-    constructor(private readonly orm: MikroORM) {
-        this.repository = this.orm.em.getRepository(Tip);
-    }
-
-    async execute(query: ListTipsQuery) {
-        return await this.repository.findAll();
-    }
+  async execute(query: ListTipsQuery) {
+    return await this.tipRepository.getAll();
+  }
 }
