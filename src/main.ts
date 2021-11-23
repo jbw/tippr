@@ -1,10 +1,16 @@
 import * as helmet from "helmet";
 
-import { INestApplication, Logger, ValidationPipe } from "@nestjs/common";
+import {
+  INestApplication,
+  Logger,
+  ValidationPipe,
+  VersioningType
+} from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 
 import { AppModule } from "./app.module";
+import { loggerMiddleware } from "./tippr.infrastructure/middleware/logger.middleware";
 
 async function SetupSwagger(app: INestApplication) {
 
@@ -26,8 +32,15 @@ async function bootstrap() {
 
   app.useGlobalPipes(new ValidationPipe());
 
+  app.enableVersioning({
+    type: VersioningType.URI,
+  });
+
   app.use(helmet());
-  //app.enableCors();
+
+  app.use(loggerMiddleware);
+
+  app.enableCors();
 
   await SetupSwagger(app);
 
