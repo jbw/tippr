@@ -9,7 +9,9 @@ import { CreateTipCommand } from "../features/create/create.command";
 import { ListTipsQuery } from "../features/list/list.query";
 
 @ApiBearerAuth()
-@Controller()
+@Controller({
+  path: 'api/tips'
+})
 export class TipsController {
   constructor(private commandBus: CommandBus, private queryBus: QueryBus) {}
 
