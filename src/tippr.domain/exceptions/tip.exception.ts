@@ -1,3 +1,3 @@
 import { HttpException } from "@nestjs/common";
 
-export class ITipDomainException extends HttpException { }
+export class TipDomainException extends HttpException { }
