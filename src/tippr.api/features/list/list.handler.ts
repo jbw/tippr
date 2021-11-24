@@ -1,7 +1,6 @@
-import { TipRepository } from "src/tippr.infrastructure/repositories/tip.repository";
-
 import { IQueryHandler, QueryHandler } from "@nestjs/cqrs";
 
+import { TipRepository } from "../../../tippr.infrastructure/repositories/tip.repository";
 import { ListTipsQuery } from "./list.query";
 
 @QueryHandler(ListTipsQuery)
