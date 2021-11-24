@@ -1,6 +1,6 @@
-import { ILogger } from "src/tippr.domain/logger.interface";
-
 import { Injectable, Logger } from "@nestjs/common";
+
+import { ILogger } from "../../tippr.domain/logger.interface";
 
 @Injectable()
 export class LoggerService extends Logger implements ILogger {

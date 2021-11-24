@@ -1,8 +1,7 @@
-import { Tip } from "src/tippr.infrastructure/entities/tip.entity";
-import { TipRepository } from "src/tippr.infrastructure/repositories/tip.repository";
-
 import { CommandHandler, ICommandHandler } from "@nestjs/cqrs";
 
+import { Tip } from "../../../tippr.infrastructure/entities/tip.entity";
+import { TipRepository } from "../../../tippr.infrastructure/repositories/tip.repository";
 import { CreateTipCommand } from "./create.command";
 
 @CommandHandler(CreateTipCommand)

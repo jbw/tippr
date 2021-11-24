@@ -1,7 +1,7 @@
-import { DatabaseConfig } from "src/tippr.domain/database.interface";
-
 import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
+
+import { DatabaseConfig } from "../../tippr.domain/database.interface";
 
 @Injectable()
 export class DatabaseConfigService implements DatabaseConfig {

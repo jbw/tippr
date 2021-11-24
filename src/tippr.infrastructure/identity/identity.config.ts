@@ -1,7 +1,7 @@
-import { IdentityConfig } from "src/tippr.domain/identity.interface";
-
 import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
+
+import { IdentityConfig } from "../../tippr.domain/identity.interface";
 
 @Injectable()
 export class IdentityConfigService implements IdentityConfig {
