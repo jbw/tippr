@@ -1,4 +1,4 @@
-import { Tip } from "../../tippr.infrastructure/entities/tip.entity";
+import Tip from "../aggregates/tip.aggregate";
 
 export interface ITipRepository  {
   getAll(): Promise<Tip[]>;

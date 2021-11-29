@@ -2,8 +2,8 @@ import { MikroORM } from "@mikro-orm/core";
 import { EntityRepository } from "@mikro-orm/postgresql";
 import { Injectable } from "@nestjs/common";
 
+import Tip from "../../tippr.domain/aggregates/tip.aggregate";
 import { ITipRepository } from "../../tippr.domain/repositories/tip.repository";
-import { Tip } from "../entities/tip.entity";
 
 @Injectable()
 export class TipRepository implements ITipRepository {
