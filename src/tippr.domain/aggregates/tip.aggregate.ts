@@ -4,7 +4,6 @@ import { Entity, PrimaryKey, Property } from "@mikro-orm/core";
 import { AggregateRoot } from "@nestjs/cqrs";
 
 import { TipCreatedEvent } from "../events/tip-created-event";
-import { IAggregateRoot } from "../seedWork/aggregate-root.interface";
 
 @Entity()
 export default class Tip extends AggregateRoot {
