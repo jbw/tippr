@@ -1,7 +1,7 @@
 import { Options } from "@mikro-orm/core";
 import { Logger } from "@nestjs/common";
 
-import { Tip } from "../../entities/tip.entity";
+import Tip from "../../../tippr.domain/aggregates/tip.aggregate";
 import { DatabaseConfigService } from "../database.config.service";
 
 const logger = new Logger("MikroORM");
