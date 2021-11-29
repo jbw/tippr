@@ -1,19 +1,25 @@
-import { Entity as MikroEntity, PrimaryKey, Property } from "@mikro-orm/core";
+import { v4 as uuid } from "uuid";
 
-import { Entity } from "../seedWork/Entity";
+import { Entity, PrimaryKey, Property } from "@mikro-orm/core";
+import { AggregateRoot } from "@nestjs/cqrs";
 
-@MikroEntity()
-export default class Tip extends Entity {
+import { TipCreatedEvent } from "../events/tip-created-event";
+import { IAggregateRoot } from "../seedWork/aggregate-root.interface";
 
-  constructor(amount: number, message: string) {
-
+@Entity()
+export default class Tip extends AggregateRoot {
+  constructor( amount: number, message: string) {
     super();
 
     this.amount = amount;
     this.message = message;
+
+    // add domain event
+    this.apply(new TipCreatedEvent(uuid(), amount, message));
   }
 
-  // TODO: add domain behaviour code
+  @PrimaryKey()
+  id: string = uuid();
 
   // TODO: Can we pull out of the properties into it's own configuration?
   @Property()
@@ -23,5 +29,5 @@ export default class Tip extends Entity {
   message: string;
 
   @Property()
-  created: Date  = new Date();
+  created: Date = new Date();
 }

@@ -1,4 +1,4 @@
-import { CommandHandler, ICommandHandler } from "@nestjs/cqrs";
+import { CommandHandler, EventPublisher, ICommandHandler } from "@nestjs/cqrs";
 
 import Tip from "../../../tippr.domain/aggregates/tip.aggregate";
 import { TipRepository } from "../../../tippr.infrastructure/repositories/tip.repository";
@@ -7,17 +7,22 @@ import { TipDto } from "./tip.dto";
 
 @CommandHandler(CreateTipCommand)
 export class CreateTipHandler implements ICommandHandler<CreateTipCommand> {
+  constructor(
+    private readonly repository: TipRepository,private publisher: EventPublisher
+  ) {}
 
+  async execute(command: CreateTipCommand): Promise<TipDto> {
+    const { amount, message } = command;
 
-    constructor(private readonly tipRepository: TipRepository) {}
+    const tip = this.publisher.mergeObjectContext(
+      new Tip(amount, message)
+    );
 
+    await this.repository.persist(tip);
 
-    async execute(command: CreateTipCommand): Promise<TipDto> {
+    // we have peristed our tip so we can dispatch the events
+    tip.commit();
 
-        var tip = new Tip(command.amount, command.message);
-
-        await this.tipRepository.addAndSave(tip);
-
-        return TipDto.FromTip(tip);
-    }
+    return TipDto.FromTip(tip);
+  }
 }

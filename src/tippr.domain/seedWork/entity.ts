@@ -7,5 +7,4 @@ export abstract class Entity {
 
   @PrimaryKey()
   id: string = uuid();
-
 }

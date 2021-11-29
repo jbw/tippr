@@ -3,10 +3,10 @@ import { EntityRepository } from "@mikro-orm/postgresql";
 import { Injectable } from "@nestjs/common";
 
 import Tip from "../../tippr.domain/aggregates/tip.aggregate";
-import { ITipRepository } from "../../tippr.domain/repositories/tip.repository";
+import { IRepository } from "../../tippr.domain/seedWork/repository.interface";
 
 @Injectable()
-export class TipRepository implements ITipRepository {
+export class TipRepository implements IRepository<Tip> {
   private readonly repository: EntityRepository<Tip>;
 
   constructor(private readonly orm: MikroORM) {
@@ -17,7 +17,7 @@ export class TipRepository implements ITipRepository {
     return await this.repository.findAll();
   }
 
-  async addAndSave(tip: Tip){
+  async persist(tip: Tip){
     await this.repository.persistAndFlush(tip);
 
   }

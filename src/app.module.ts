@@ -3,6 +3,7 @@ import { ConfigModule } from "@nestjs/config";
 import { CqrsModule } from "@nestjs/cqrs";
 
 import { TipsController } from "./tippr.api/controllers/tips.controller";
+import { AggregateTipsHandler } from "./tippr.api/features/aggregate/aggregate.handler";
 import { CreateTipHandler } from "./tippr.api/features/create/create.handler";
 import { ListTipQueryHandler } from "./tippr.api/features/list/list.handler";
 import { DatabaseConfigModule } from "./tippr.infrastructure/data/database.module";
@@ -12,7 +13,7 @@ import { LoggerModule } from "./tippr.infrastructure/logger/logger.module";
 import { TipRepository } from "./tippr.infrastructure/repositories/tip.repository";
 import { TipRepositoryModule } from "./tippr.infrastructure/repositories/tips.repository.module";
 
-export const Handlers = [CreateTipHandler, ListTipQueryHandler];
+export const Handlers = [CreateTipHandler, ListTipQueryHandler, AggregateTipsHandler];
 
 @Module({
   imports: [
