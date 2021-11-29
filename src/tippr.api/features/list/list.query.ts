@@ -1,1 +1,1 @@
-export class ListTipsQuery { }
+export class ListTipsQuery {}

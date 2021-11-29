@@ -1,4 +1,4 @@
-import { MikroORM } from "@mikro-orm/core";
+import { FilterQuery, MikroORM } from "@mikro-orm/core";
 import { EntityRepository } from "@mikro-orm/postgresql";
 import { Injectable } from "@nestjs/common";
 
@@ -12,13 +12,15 @@ export class TipRepository implements IRepository<Tip> {
   constructor(private readonly orm: MikroORM) {
     this.repository = this.orm.em.getRepository(Tip);
   }
+  getById(rootId: string): Promise<Tip> {
+    return this.repository.findOne({ id: rootId });
+  }
 
   async getAll(): Promise<Tip[]> {
     return await this.repository.findAll();
   }
 
-  async persist(tip: Tip){
+  async persist(tip: Tip) {
     await this.repository.persistAndFlush(tip);
-
   }
 }

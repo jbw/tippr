@@ -1,5 +1,7 @@
+import { v4 as uuid } from "uuid";
 
-export interface IRepository<IAggregatRoot> {
-  getAll(): Promise<IAggregatRoot[]>;
-  persist(root: IAggregatRoot);
+export interface IRepository<IAggregateRoot> {
+  getAll(): Promise<IAggregateRoot[]>;
+  getById(rootId: uuid): Promise<IAggregateRoot>;
+  persist(root: IAggregateRoot);
 }
