@@ -23,6 +23,19 @@ npm run test
 npm run test:e2e
 ```
 
+### Run migration
+
+#### Apply
+```sh
+npx mikro-orm migration:up
+```
+
+#### Create new migrations
+
+```sh
+npx mikro-orm migration:create
+```
+
 ### Run locally
 ```sh
 npm run start:dev
