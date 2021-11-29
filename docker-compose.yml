@@ -17,7 +17,7 @@ services:
     depends_on:
       - postgres
     volumes:
-      - .:/src/
+      - .:/src
       - /node_modules
 
   # tippr-worker:
