@@ -1,3 +1,5 @@
+import { REACTION } from "src/domain/aggregates/reaction.enum";
+
 import { CommandHandler, EventPublisher, ICommandHandler } from "@nestjs/cqrs";
 
 import Tip from "../../../domain/aggregates/tip.aggregate";
@@ -15,15 +17,18 @@ export class CreateTipHandler implements ICommandHandler<CreateTipCommand> {
   async execute(command: CreateTipCommand): Promise<TipDto> {
     const { userid, amount, message } = command;
 
-    const tip = this.publisher.mergeObjectContext(
-      new Tip(userid, amount, message),
-    );
+    const tip = new Tip();
+    tip.create(userid, amount, message);
 
-    await this.repository.persist(tip);
+    const tipContext = this.publisher.mergeObjectContext(tip);
+
+    await tipContext.addReaction(REACTION.PARTY);
+
+    await this.repository.persist(tipContext);
 
     // we have peristed our tip so we can dispatch the events
-    tip.commit();
+    tipContext.commit();
 
-    return TipDto.FromTip(tip);
+    return TipDto.FromTip(tipContext);
   }
 }

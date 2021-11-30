@@ -16,9 +16,11 @@ import { REACTION } from "./reaction.enum";
 
 @Entity()
 export default class Tip extends AggregateRoot {
-  constructor(userid: string, amount: number, message: string) {
+  constructor() {
     super();
+  }
 
+  create(userid: string, amount: number, message: string) {
     this.userid = userid;
     this.amount = amount;
     this.message = message;
@@ -26,7 +28,7 @@ export default class Tip extends AggregateRoot {
     this.apply(new TipCreatedEvent(uuid(), amount, message));
   }
 
-  async addReaction(reaction: REACTION) {
+  addReaction(reaction: REACTION) {
     this.reactions.add(new Reaction(reaction));
 
     this.apply(new ReactionAddedEvent(this.id, reaction));

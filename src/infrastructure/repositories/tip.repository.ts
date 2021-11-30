@@ -11,10 +11,14 @@ export class TipRepository implements IRepository<Tip> {
 
   constructor(private readonly orm: MikroORM) {
     this.repository = this.orm.em.getRepository(Tip);
-
   }
-  getById(rootId: string): Promise<Tip> {
-    return this.orm.em.findOne(Tip, { id: rootId});
+  async getById(rootId: string): Promise<Tip> {
+    var fetchedTip = await this.repository.findOne({ id: rootId });
+
+    var tip = new Tip();
+    tip.create(fetchedTip.userid, fetchedTip.amount, fetchedTip.message);
+
+    return tip;
   }
 
   async getAll(): Promise<Tip[]> {
