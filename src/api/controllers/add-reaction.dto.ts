@@ -6,11 +6,6 @@ import { ApiProperty } from "@nestjs/swagger";
 export class AddReactionDto {
 
   @IsNotEmpty()
-  @IsUUID()
-  @ApiProperty()
-  userid: string;
-
-  @IsNotEmpty()
   @ApiProperty()
   reaction: REACTION;
 }

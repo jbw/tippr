@@ -17,7 +17,6 @@ import { TipDto } from "../../application/dtos/tip.dto";
 import { CreateTipCommand } from "../../application/features/create/create.command";
 import { GetTipByIdQuery } from "../../application/features/getById/getById.query";
 import { ListTipsQuery } from "../../application/features/list/list.query";
-import Tip from "../../domain/aggregates/tip.aggregate";
 import { Permission } from "../../domain/permissions/permissions.enum";
 import { Authorize } from "../../infrastructure/identity/authorization/authorize.decorator";
 import { AddReactionDto } from "./add-reaction.dto";
@@ -67,7 +66,7 @@ export class TipsController {
   @ApiParam({ name: 'id', required: true })
   async addReaction(@Param() params, @Body() addReactionDto: AddReactionDto): Promise<TipDto> {
     const tip = await this.commandBus.execute(
-      new AddReactionCommand(params.id, REACTION.BEER),
+      new AddReactionCommand(params.id, addReactionDto.reaction),
     );
     return tip;
   }
