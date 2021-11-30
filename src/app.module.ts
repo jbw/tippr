@@ -4,7 +4,7 @@ import { CqrsModule } from "@nestjs/cqrs";
 
 import { TipsController } from "./api/controllers/tips.controller";
 import { ReactionAddedHandler } from "./application/domain-event-handlers/reaction-added.handler";
-import { TipTotalsQueryHandler } from "./application/domain-event-handlers/tip-totals.handler";
+import { TipTotalsHandler } from "./application/domain-event-handlers/tip-totals.handler";
 import { AddReactionHandler } from "./application/features/add-reaction/add-reaction.handler";
 import { CreateTipHandler } from "./application/features/create/create.handler";
 import { GetByIdQueryHandler } from "./application/features/getById/getById.handler";
@@ -16,14 +16,9 @@ import { LoggerModule } from "./infrastructure/logger/logger.module";
 import { TipRepository } from "./infrastructure/repositories/tip.repository";
 import { TipRepositoryModule } from "./infrastructure/repositories/tips.repository.module";
 
-export const Handlers = [
-  CreateTipHandler,
-  ListTipQueryHandler,
-  TipTotalsQueryHandler,
-  GetByIdQueryHandler,
-  AddReactionHandler,
-  ReactionAddedHandler,
-];
+const CommandHandlers = [CreateTipHandler, AddReactionHandler];
+const QueryHandlers = [ListTipQueryHandler, GetByIdQueryHandler];
+const EventHandlers = [TipTotalsHandler, ReactionAddedHandler];
 
 @Module({
   imports: [
@@ -36,6 +31,11 @@ export const Handlers = [
     TipRepositoryModule,
   ],
   controllers: [TipsController],
-  providers: [TipRepository, ...Handlers],
+  providers: [
+    TipRepository,
+    ...CommandHandlers,
+    ...QueryHandlers,
+    ...EventHandlers,
+  ],
 })
 export class AppModule {}

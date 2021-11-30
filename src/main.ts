@@ -19,7 +19,6 @@ async function SetupSwagger(app: INestApplication) {
     .setDescription('Tips API')
     .setVersion('1.0')
     .addBearerAuth({ type: 'apiKey', in: 'header', name: 'Authorization'})
-
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
