@@ -3,7 +3,9 @@ import { ConfigModule } from "@nestjs/config";
 import { CqrsModule } from "@nestjs/cqrs";
 
 import { TipsController } from "./api/controllers/tips.controller";
+import { ReactionAddedHandler } from "./application/domain-event-handlers/reaction-added.handler";
 import { TipTotalsQueryHandler } from "./application/domain-event-handlers/tip-totals.handler";
+import { AddReactionHandler } from "./application/features/add-reaction/add-reaction.handler";
 import { CreateTipHandler } from "./application/features/create/create.handler";
 import { GetByIdQueryHandler } from "./application/features/getById/getById.handler";
 import { ListTipQueryHandler } from "./application/features/list/list.handler";
@@ -19,6 +21,8 @@ export const Handlers = [
   ListTipQueryHandler,
   TipTotalsQueryHandler,
   GetByIdQueryHandler,
+  AddReactionHandler,
+  ReactionAddedHandler,
 ];
 
 @Module({

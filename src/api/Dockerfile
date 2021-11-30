@@ -23,4 +23,6 @@ COPY --from=build /src/package*.json /src/
 COPY --from=build /src/node_modules/ /src/node_modules/
 COPY --from=build /src/dist /src/dist
 
+USER node
+
 CMD ["node", "dist/main"]

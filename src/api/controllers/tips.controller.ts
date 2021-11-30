@@ -1,3 +1,6 @@
+import { AddReactionCommand } from "src/application/features/add-reaction/add-reaction.command";
+import { REACTION } from "src/domain/aggregates/reaction.enum";
+
 import {
   Body,
   Controller,
@@ -17,6 +20,7 @@ import { ListTipsQuery } from "../../application/features/list/list.query";
 import Tip from "../../domain/aggregates/tip.aggregate";
 import { Permission } from "../../domain/permissions/permissions.enum";
 import { Authorize } from "../../infrastructure/identity/authorization/authorize.decorator";
+import { AddReactionDto } from "./add-reaction.dto";
 import { CreateTipDto } from "./create-tip.dto";
 
 @ApiBearerAuth()
@@ -31,9 +35,12 @@ export class TipsController {
   @Authorize(Permission.TIPS_WRITE)
   @ApiBody({ type: CreateTipDto })
   async create(@Body() createTipDto: CreateTipDto): Promise<TipDto> {
+    const { userid, amount, message } = createTipDto;
+
     const tip = await this.commandBus.execute(
-      new CreateTipCommand(createTipDto.amount, createTipDto.message),
+      new CreateTipCommand(userid, amount, message),
     );
+
     return tip;
   }
 
@@ -48,9 +55,20 @@ export class TipsController {
   @Get(':id')
   @HttpCode(HttpStatus.OK)
   @Authorize(Permission.TIPS_READ)
-  @ApiParam({ name: 'id', required: true})
+  @ApiParam({ name: 'id', required: true })
   async getById(@Param() params): Promise<TipDto> {
     const tips = await this.queryBus.execute(new GetTipByIdQuery(params.id));
     return tips;
+  }
+
+  @Post(':id/reaction')
+  @HttpCode(HttpStatus.OK)
+  @Authorize(Permission.TIPS_WRITE)
+  @ApiParam({ name: 'id', required: true })
+  async addReaction(@Param() params, @Body() addReactionDto: AddReactionDto): Promise<TipDto> {
+    const tip = await this.commandBus.execute(
+      new AddReactionCommand(params.id, REACTION.BEER),
+    );
+    return tip;
   }
 }

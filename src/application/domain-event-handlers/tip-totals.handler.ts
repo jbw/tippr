@@ -12,3 +12,5 @@ export class TipTotalsQueryHandler implements IEventHandler<TipCreatedEvent> {
     Logger.log('TipCreatedEventHandler was called');
   }
 }
+
+

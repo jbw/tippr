@@ -4,4 +4,5 @@ export interface IRepository<IAggregateRoot> {
   getAll(): Promise<IAggregateRoot[]>;
   getById(rootId: uuid): Promise<IAggregateRoot>;
   persist(root: IAggregateRoot);
+  update();
 }

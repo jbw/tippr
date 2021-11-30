@@ -8,7 +8,7 @@
   "mikro-orm": {
     "useTsNode": true,
     "configPaths": [
-      "./src/tippr.infrastructure/data/mikro-orm/mikro-orm.config.cli.ts"
+      "./src/infrastructure/data/mikro-orm/mikro-orm.config.cli.ts"
     ]
   },
   "scripts": {

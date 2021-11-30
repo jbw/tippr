@@ -8,14 +8,15 @@ import { CreateTipCommand } from "./create.command";
 @CommandHandler(CreateTipCommand)
 export class CreateTipHandler implements ICommandHandler<CreateTipCommand> {
   constructor(
-    private readonly repository: TipRepository,private publisher: EventPublisher
+    private readonly repository: TipRepository,
+    private publisher: EventPublisher,
   ) {}
 
   async execute(command: CreateTipCommand): Promise<TipDto> {
-    const { amount, message } = command;
+    const { userid, amount, message } = command;
 
     const tip = this.publisher.mergeObjectContext(
-      new Tip(amount, message)
+      new Tip(userid, amount, message),
     );
 
     await this.repository.persist(tip);

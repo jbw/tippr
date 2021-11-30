@@ -1,8 +1,12 @@
-import { IsNotEmpty, IsPositive, Min } from "class-validator";
+import { IsNotEmpty, IsPositive, IsUUID, Min } from "class-validator";
 
-import { ApiBody, ApiProperty } from "@nestjs/swagger";
+import { ApiProperty } from "@nestjs/swagger";
 
 export class CreateTipDto {
+  @IsNotEmpty()
+  @IsUUID()
+  @ApiProperty()
+  userid: string;
 
   @Min(1)
   @IsPositive()

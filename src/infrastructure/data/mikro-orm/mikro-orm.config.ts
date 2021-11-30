@@ -1,6 +1,7 @@
 import { Options } from "@mikro-orm/core";
 import { Logger } from "@nestjs/common";
 
+import Reaction from "../../../domain/aggregates/reaction.entity";
 import Tip from "../../../domain/aggregates/tip.aggregate";
 import { DatabaseConfigService } from "../database.config.service";
 
@@ -8,7 +9,7 @@ const logger = new Logger("MikroORM");
 
 export const getMikroOrmOptions = (config: DatabaseConfigService): Options =>
 ({
-  entities: [Tip],
+  entities: [Tip, Reaction],
   host: config.getDatabaseHost(),
   dbName: config.getDatabaseName(),
   user: config.getDatabaseUser(),
@@ -19,16 +20,5 @@ export const getMikroOrmOptions = (config: DatabaseConfigService): Options =>
   logger: logger.log.bind(logger),
   forceUtcTimezone: true,
   strict: true,
-  discovery: {
-    tsConfigPath: "../tsconfig.json",
-  },
-  migrations: {
-    tableName: "migrations",
-    path: "./migrations",
-    transactional: true,
-    allOrNothing: true,
-    emit: 'ts',
-    dropTables: true,
-    safe: false,
-  },
+
 } as Options);
