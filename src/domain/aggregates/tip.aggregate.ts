@@ -23,13 +23,12 @@ export default class Tip extends AggregateRoot {
     this.amount = amount;
     this.message = message;
 
-    // add domain event
     this.apply(new TipCreatedEvent(uuid(), amount, message));
   }
 
   async addReaction(reaction: REACTION) {
-    //this.reactions.init();
     this.reactions.add(new Reaction(reaction));
+
     this.apply(new ReactionAddedEvent());
   }
 
@@ -39,7 +38,6 @@ export default class Tip extends AggregateRoot {
   @Property()
   userid: string;
 
-  // TODO: Can we pull out of the properties into it's own configuration?
   @Property()
   amount!: number;
 

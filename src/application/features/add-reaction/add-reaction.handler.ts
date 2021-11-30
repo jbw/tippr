@@ -1,5 +1,3 @@
-import Tip from "src/domain/aggregates/tip.aggregate";
-
 import { CommandHandler, EventPublisher, ICommandHandler } from "@nestjs/cqrs";
 
 import { TipRepository } from "../../../infrastructure/repositories/tip.repository";
@@ -21,10 +19,8 @@ export class AddReactionHandler implements ICommandHandler<AddReactionCommand> {
     );
 
     await tipContext.addReaction(reaction);
-
     await this.repository.update();
-
-    //tipContext.commit();
+    tipContext.commit();
 
     return TipDto.FromTip(tipContext);
   }
