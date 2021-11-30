@@ -21,7 +21,7 @@ export class AddReactionHandler implements ICommandHandler<AddReactionCommand> {
     );
 
     await tipContext.addReaction(reaction);
-    console.log(tipContext.getUncommittedEvents());
+
     await this.repository.update();
 
     //tipContext.commit();
