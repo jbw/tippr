@@ -25,7 +25,7 @@ module.exports = {
     [
       "@codedependant/semantic-release-docker", {
         "dockerTags": ["{version}", "{git_sha}"],
-        "dockerFile": "src/tippr.api/Dockerfile",
+        "dockerFile": "src/api/Dockerfile",
         "dockerRegistry": process.env.CONTAINER_REGISTRY,
         "dockerImage": process.env.CONTAINER_REPOSITORY,
         "dockerLogin": false,

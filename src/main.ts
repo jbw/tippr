@@ -10,7 +10,7 @@ import { NestFactory } from "@nestjs/core";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 
 import { AppModule } from "./app.module";
-import { loggerMiddleware } from "./tippr.infrastructure/middleware/logger.middleware";
+import { loggerMiddleware } from "./infrastructure/middleware/logger.middleware";
 
 async function SetupSwagger(app: INestApplication) {
 

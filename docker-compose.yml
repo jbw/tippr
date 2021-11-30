@@ -4,7 +4,7 @@ services:
     image: tippr-api
     build:
       context: .
-      dockerfile: src/tippr.api/Dockerfile
+      dockerfile: src/api/Dockerfile
     environment:
       DB_HOST: "postgres"
       DB_NAME: "tippr"
