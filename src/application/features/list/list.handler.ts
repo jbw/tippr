@@ -11,7 +11,7 @@ export class ListTipQueryHandler implements IQueryHandler<ListTipsQuery> {
   async execute(query: ListTipsQuery): Promise<TipDto[]> {
     var tips = await this.tipRepository.getAll();
 
-    var tipDtos: TipDto[] = tips.map((tip) => TipDto.FromTip(tip));
-    return tipDtos;
+    var tipDtos =  Promise.all(tips.map(async (tip) => TipDto.FromTip(tip)));
+    return  tipDtos;
   }
 }

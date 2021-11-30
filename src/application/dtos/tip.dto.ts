@@ -1,12 +1,13 @@
 import Tip from "../../domain/aggregates/tip.aggregate";
 
 export class TipDto {
-  static FromTip(tip: Tip): TipDto {
+  static async FromTip(tip: Tip): Promise<TipDto> {
     const tipDto = new TipDto();
 
     tipDto.id = tip.id;
     tipDto.amount = tip.amount;
     tipDto.message = tip.message;
+    tipDto.reactionCount = await tip.reactions.loadCount();
 
     return tipDto;
   }
@@ -14,4 +15,5 @@ export class TipDto {
   id: string;
   amount: number;
   message: string;
+  reactionCount: number;
 }
