@@ -5,7 +5,7 @@ import { Logger } from "@nestjs/common";
 import { EventsHandler, IEventHandler } from "@nestjs/cqrs";
 
 @EventsHandler(TipCreatedEvent)
-export class TipTotalsQueryHandler implements IEventHandler<TipCreatedEvent> {
+export class TipTotalsHandler implements IEventHandler<TipCreatedEvent> {
   constructor(private repository: TipRepository) {}
 
   handle(event: TipCreatedEvent) {
