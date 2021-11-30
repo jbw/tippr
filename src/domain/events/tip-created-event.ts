@@ -11,6 +11,6 @@ export class TipCreatedEvent implements IDomainEvent {
   constructor(tipId: uuid, amount: number, message: string) {
     this.aggregateRoodId = tipId;
 
-    Logger.log(`TipCreatedEvent was called`);
+    Logger.log(`TipCreatedEvent was created`);
   }
 }

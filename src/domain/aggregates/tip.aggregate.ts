@@ -29,7 +29,7 @@ export default class Tip extends AggregateRoot {
   async addReaction(reaction: REACTION) {
     this.reactions.add(new Reaction(reaction));
 
-    this.apply(new ReactionAddedEvent());
+    this.apply(new ReactionAddedEvent(this.id, reaction));
   }
 
   @PrimaryKey()
