@@ -9,6 +9,7 @@ const logger = new Logger("MikroORM");
 
 export const getMikroOrmOptions = (config: DatabaseConfigService): Options =>
 ({
+  forceEntityConstructor: true,
   entities: [Tip, Reaction],
   host: config.getDatabaseHost(),
   dbName: config.getDatabaseName(),

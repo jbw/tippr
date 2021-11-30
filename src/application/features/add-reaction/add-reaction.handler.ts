@@ -21,11 +21,10 @@ export class AddReactionHandler implements ICommandHandler<AddReactionCommand> {
       await this.repository.getById(id),
     );
 
-    tip.addReaction(REACTION.PARTY);
+    tip.addReaction(reaction);
 
-    await this.repository.persist(tip);
+    await this.repository.update();
 
-    // we have peristed our tip so we can dispatch the events
     tip.commit();
 
     return TipDto.FromTip(tip);

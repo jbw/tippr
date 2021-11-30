@@ -13,12 +13,7 @@ export class TipRepository implements IRepository<Tip> {
     this.repository = this.orm.em.getRepository(Tip);
   }
   async getById(rootId: string): Promise<Tip> {
-    var fetchedTip = await this.repository.findOne({ id: rootId });
-
-    var tip = new Tip();
-    tip.create(fetchedTip.userid, fetchedTip.amount, fetchedTip.message);
-
-    return tip;
+    return await this.repository.findOne({ id: rootId });
   }
 
   async getAll(): Promise<Tip[]> {
