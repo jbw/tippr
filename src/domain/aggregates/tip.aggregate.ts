@@ -34,8 +34,8 @@ export default class Tip extends AggregateRoot {
     this.apply(new TipCreatedEvent(uuid(), amount, message));
   }
 
-  addReaction(reaction: REACTION) {
-    this.reactions.add(new Reaction(reaction));
+  addReaction(fromUserId: string, reaction: REACTION) {
+    this.reactions.add(new Reaction(fromUserId, reaction));
 
     this.apply(new ReactionAddedEvent(this.id, reaction));
   }

@@ -34,9 +34,10 @@ export class TipsController {
   @HttpCode(HttpStatus.OK)
   @Authorize(Permission.TIPS_WRITE)
   @ApiBody({ type: CreateTipDto })
-  async create(@User() user: UserContext, @Body() createTipDto: CreateTipDto): Promise<TipDto> {
-
-    console.log(user);
+  async create(
+    @User() user: UserContext,
+    @Body() createTipDto: CreateTipDto,
+  ): Promise<TipDto> {
     const { toUserId, amount, message } = createTipDto;
 
     const tip = await this.commandBus.execute(
@@ -67,9 +68,13 @@ export class TipsController {
   @HttpCode(HttpStatus.OK)
   @Authorize(Permission.TIPS_WRITE)
   @ApiParam({ name: 'id', required: true })
-  async addReaction(@Param() params, @Body() addReactionDto: AddReactionDto): Promise<TipDto> {
+  async addReaction(
+    @User() user: UserContext,
+    @Param() params,
+    @Body() addReactionDto: AddReactionDto,
+  ): Promise<TipDto> {
     const tip = await this.commandBus.execute(
-      new AddReactionCommand(params.id, addReactionDto.reaction),
+      new AddReactionCommand(params.id, user.userid, addReactionDto.reaction),
     );
     return tip;
   }
