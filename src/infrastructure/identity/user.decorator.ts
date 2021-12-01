@@ -1,7 +1,5 @@
 import { createParamDecorator, ExecutionContext } from "@nestjs/common";
 
-import { Permission } from "../../domain/permissions/permissions.enum";
-
 export class UserContext {
   constructor(
     public readonly userid: string,
@@ -14,8 +12,10 @@ export const User = createParamDecorator(
   (data: unknown, ctx: ExecutionContext) => {
     const request = ctx.switchToHttp().getRequest();
 
-    const userid = request.user['http://jasons-burger-shop.com/userid'];
-    const orgs = request.user['http://jasons-burger-shop.com/orgs'];
+    const namespace = process.env.IDENTITY_AUDIENCE;
+    const userid = request.user[`${namespace}/userid`];
+    const orgs = request.user[`${namespace}/orgs`];
+
     const permissions = request.user.permissions;
 
     const user = new UserContext(userid, permissions, orgs);
