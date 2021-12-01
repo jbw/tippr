@@ -20,8 +20,14 @@ export default class Tip extends AggregateRoot {
     super();
   }
 
-  create(userid: string, amount: number, message: string) {
-    this.userid = userid;
+  create(
+    fromUserId: string,
+    toUserId: string,
+    amount: number,
+    message: string,
+  ) {
+    this.fromUserId = fromUserId;
+    this.toUserId = toUserId;
     this.amount = amount;
     this.message = message;
 
@@ -38,7 +44,10 @@ export default class Tip extends AggregateRoot {
   id: string = uuid();
 
   @Property()
-  userid: string;
+  fromUserId: string;
+
+  @Property()
+  toUserId: string;
 
   @Property()
   amount!: number;

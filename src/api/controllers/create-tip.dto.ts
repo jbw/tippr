@@ -6,7 +6,7 @@ export class CreateTipDto {
   @IsNotEmpty()
   @IsUUID()
   @ApiProperty()
-  userid: string;
+  toUserId: string;
 
   @Min(1)
   @IsPositive()
