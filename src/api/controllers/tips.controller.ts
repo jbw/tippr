@@ -1,5 +1,6 @@
 import { AddReactionCommand } from "src/application/features/add-reaction/add-reaction.command";
 import { REACTION } from "src/domain/aggregates/reaction.enum";
+import { User, UserContext } from "src/infrastructure/identity/user.decorator";
 
 import {
   Body,
@@ -33,11 +34,14 @@ export class TipsController {
   @HttpCode(HttpStatus.OK)
   @Authorize(Permission.TIPS_WRITE)
   @ApiBody({ type: CreateTipDto })
-  async create(@Body() createTipDto: CreateTipDto): Promise<TipDto> {
-    const { userid, amount, message } = createTipDto;
+  async create(
+    @User() user: UserContext,
+    @Body() createTipDto: CreateTipDto,
+  ): Promise<TipDto> {
+    const { toUserId, amount, message } = createTipDto;
 
     const tip = await this.commandBus.execute(
-      new CreateTipCommand(userid, amount, message),
+      new CreateTipCommand(user.userid, toUserId, amount, message),
     );
 
     return tip;
@@ -64,9 +68,13 @@ export class TipsController {
   @HttpCode(HttpStatus.OK)
   @Authorize(Permission.TIPS_WRITE)
   @ApiParam({ name: 'id', required: true })
-  async addReaction(@Param() params, @Body() addReactionDto: AddReactionDto): Promise<TipDto> {
+  async addReaction(
+    @User() user: UserContext,
+    @Param() params,
+    @Body() addReactionDto: AddReactionDto,
+  ): Promise<TipDto> {
     const tip = await this.commandBus.execute(
-      new AddReactionCommand(params.id, addReactionDto.reaction),
+      new AddReactionCommand(params.id, user.userid, addReactionDto.reaction),
     );
     return tip;
   }

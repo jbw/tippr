@@ -15,14 +15,12 @@ export class CreateTipHandler implements ICommandHandler<CreateTipCommand> {
   ) {}
 
   async execute(command: CreateTipCommand): Promise<TipDto> {
-    const { userid, amount, message } = command;
+    const { fromUserId, toUserId, amount, message } = command;
 
     const tip = new Tip();
-    tip.create(userid, amount, message);
+    tip.create(fromUserId, toUserId, amount, message);
 
     const tipContext = this.publisher.mergeObjectContext(tip);
-
-    await tipContext.addReaction(REACTION.PARTY);
 
     await this.repository.persist(tipContext);
 

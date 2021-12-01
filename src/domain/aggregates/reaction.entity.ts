@@ -8,9 +8,13 @@ import Tip from "./tip.aggregate";
 
 @Entity()
 export default class Reaction {
-  constructor(value: REACTION) {
+  constructor(fromUserId: string, value: REACTION) {
+    this.fromUserId = fromUserId;
     this.value = value;
   }
+
+  @Property()
+  fromUserId!: string;
 
   @Property()
   createdAt: Date = new Date();
@@ -22,5 +26,5 @@ export default class Reaction {
   tip!: Tip;
 
   @Property()
-  value: string;
+  value!: string;
 }

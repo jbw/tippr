@@ -1,6 +1,3 @@
-import { REACTION } from "src/domain/aggregates/reaction.enum";
-import Tip from "src/domain/aggregates/tip.aggregate";
-
 import { CommandHandler, EventPublisher, ICommandHandler } from "@nestjs/cqrs";
 
 import { TipRepository } from "../../../infrastructure/repositories/tip.repository";
@@ -15,13 +12,13 @@ export class AddReactionHandler implements ICommandHandler<AddReactionCommand> {
   ) {}
 
   async execute(command: AddReactionCommand): Promise<TipDto> {
-    const { id, reaction } = command;
+    const { id, fromUserId, reaction } = command;
 
     const tip = this.publisher.mergeObjectContext(
       await this.repository.getById(id),
     );
 
-    tip.addReaction(reaction);
+    tip.addReaction(fromUserId, reaction);
 
     await this.repository.update();
 
