@@ -1,8 +1,9 @@
-import { CommandHandler, EventPublisher, ICommandHandler } from "@nestjs/cqrs";
+import { NotFoundException } from '@nestjs/common';
+import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
 
-import { TipRepository } from "../../../infrastructure/repositories/tip.repository";
-import { TipDto } from "../../dtos/tip.dto";
-import { AddReactionCommand } from "./add-reaction.command";
+import { TipRepository } from '../../../infrastructure/repositories/tip.repository';
+import { TipDto } from '../../dtos/tip.dto';
+import { AddReactionCommand } from './add-reaction.command';
 
 @CommandHandler(AddReactionCommand)
 export class AddReactionHandler implements ICommandHandler<AddReactionCommand> {
@@ -14,9 +15,12 @@ export class AddReactionHandler implements ICommandHandler<AddReactionCommand> {
   async execute(command: AddReactionCommand): Promise<TipDto> {
     const { id, fromUserId, reaction } = command;
 
-    const tip = this.publisher.mergeObjectContext(
-      await this.repository.getById(id),
-    );
+    const fetchedTip = await this.repository.getById(id);
+    if (!fetchedTip) {
+      throw new NotFoundException('Tip not found');
+    }
+
+    const tip = this.publisher.mergeObjectContext(fetchedTip);
 
     tip.addReaction(fromUserId, reaction);
 

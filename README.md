@@ -1,20 +1,17 @@
 ## Getting Started
 
-Make sure you have installed and configured docker in your environment. After that you can run the below commands from the root of the project. 
-
-```sh
-docker-compose build
-docker-compose up
-```
+Make sure you have installed and configured docker in your environment. After that you can run the below commands from the root of the project.
 
 ## Local Development
 
 ### Install packages
+
 ```sh
 npm install
 ```
 
 ### Test
+
 ```sh
 npm run test
 ```
@@ -26,6 +23,7 @@ npm run test:e2e
 ### Run migration
 
 #### Apply
+
 ```sh
 npx mikro-orm migration:up
 ```
@@ -37,6 +35,7 @@ npx mikro-orm migration:create
 ```
 
 ### Run locally
+
 ```sh
 npm run start:dev
 ```
@@ -45,8 +44,13 @@ npm run start:dev
 http://localhost:3000
 ```
 
+```sh
+docker-compose build
+docker-compose up
+```
+
 ## Visual Studio code extensions
 
-* ESLint
-* Prettier
-* EditorConfig
+- ESLint
+- Prettier
+- EditorConfig
